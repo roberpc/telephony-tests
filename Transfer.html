@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Transferencia de Llamadas</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9fafb;
+      color: #333;
+      margin: 20px;
+    }
+
+    h2 {
+      color: #2c3e50;
+      margin-bottom: 16px;
+    }
+
+    .tree ul {
+      list-style-type: none;
+      margin-left: 1em;
+      padding-left: 1em;
+      border-left: 2px solid #ccc;
+    }
+
+    .tree li {
+      margin: 0.3em 0;
+      position: relative;
+    }
+
+    .tree li::before {
+      content: "";
+      position: absolute;
+      top: 0.6em;
+      left: -12px;
+      width: 10px;
+      height: 2px;
+      background: #ccc;
+    }
+
+    .tree .label {
+      cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: inline-block;
+      transition: background-color 0.2s ease;
+    }
+
+    .tree .label:hover {
+      background-color: #e1f0ff;
+    }
+
+    .tree .label.leaf {
+      color: #007acc;
+    }
+
+    .tree .label.branch::before {
+      content: "▸";
+      display: inline-block;
+      margin-right: 6px;
+      transition: transform 0.2s;
+    }
+
+    .tree .label.branch.open::before {
+      transform: rotate(90deg);
+    }
+
+    .nested {
+      display: none;
+    }
+
+    .nested.active {
+      display: block;
+    }
+
+    .selected-destino {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+
+    .buttons {
+      margin-top: 20px;
+    }
+
+    .buttons button {
+      padding: 10px 20px;
+      margin-right: 10px;
+      border: none;
+      border-radius: 6px;
+      background-color: #007acc;
+      color: white;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background-color 0.2s ease;
+    }
+
+    .buttons button:hover {
+      background-color: #005fa3;
+    }
+
+    .buttons button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Transferencias</h2>
+
+<div class="tree">
+  <ul>
+    <li>
+      <span class="label branch">Soporte</span>
+      <ul class="nested">
+        <li><span class="label leaf" onclick="seleccionarDestino('Soporte Técnico Nivel 1')">Soporte Técnico Nivel 1</span></li>
+        <li><span class="label leaf" onclick="seleccionarDestino('Soporte Técnico Nivel 2')">Soporte Técnico Nivel 2</span></li>
+        <li><span class="label leaf" onclick="seleccionarDestino('Soporte Funcional')">Soporte Funcional</span></li>
+      </ul>
+    </li>
+    <li>
+      <span class="label branch">Ventas</span>
+      <ul class="nested">
+        <li><span class="label leaf" onclick="seleccionarDestino('Ventas Particulares')">Ventas Particulares</span></li>
+        <li><span class="label leaf" onclick="seleccionarDestino('Ventas Empresas')">Ventas Empresas</span></li>
+        <li><span class="label leaf" onclick="seleccionarDestino('Renovaciones')">Renovaciones</span></li>
+        <li><span class="label leaf" onclick="seleccionarDestino('Precios y Cotizaciones')">Precios y Cotizaciones</span></li>
+      </ul>
+    </li>
+    <li>
+      <span class="label branch">Administración</span>
+      <ul class="nested">
+        <li><span class="label leaf" onclick="seleccionarDestino('Facturación')">Facturación</span></li>
+        <li><span class="label leaf" onclick="seleccionarDestino('Cobros y Pagos')">Cobros y Pagos</span></li>
+        <li><span class="label leaf" onclick="seleccionarDestino('Contabilidad')">Contabilidad</span></li>
+      </ul>
+    </li>
+    <li>
+      <span class="label branch">Recursos Humanos</span>
+      <ul class="nested">
+        <li><span class="label leaf" onclick="seleccionarDestino('Reclutamiento')">Reclutamiento</span></li>
+        <li><span class="label leaf" onclick="seleccionarDestino('Formación Interna')">Formación Interna</span></li>
+        <li><span class="label leaf" onclick="seleccionarDestino('Gestión de Nómina')">Gestión de Nómina</span></li>
+      </ul>
+    </li>
+    <li>
+      <span class="label branch">TI / Infraestructura</span>
+      <ul class="nested">
+        <li><span class="label leaf" onclick="seleccionarDestino('Infraestructura y Redes')">Infraestructura y Redes</span></li>
+        <li><span class="label leaf" onclick="seleccionarDestino('Seguridad de la Información')">Seguridad de la Información</span></li>
+        <li><span class="label leaf" onclick="seleccionarDestino('Desarrollo de Software')">Desarrollo de Software</span></li>
+      </ul>
+    </li>
+    <li>
+      <span class="label branch">Otros</span>
+      <ul class="nested">
+        <li><span class="label leaf" onclick="seleccionarDestino('Dirección General')">Dirección General</span></li>
+        <li><span class="label leaf" onclick="seleccionarDestino('Oficina Legal')">Oficina Legal</span></li>
+        <li><span class="label leaf" onclick="seleccionarDestino('Atención VIP')">Atención VIP</span></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div class="selected-destino" id="destinoSeleccionado">
+  No se ha seleccionado ningún destino.
+</div>
+
+<div class="buttons">
+  <button id="btn1paso" onclick="transferir('1')" disabled>Transferir en 1 paso</button>
+  <button id="btn2pasos" onclick="transferir('2')" disabled>Transferir en 2 pasos</button>
+</div>
+
+<script>
+  let destinoActual = null;
+
+  document.querySelectorAll('.branch').forEach(function(branch) {
+    branch.addEventListener('click', function() {
+      const nested = this.nextElementSibling;
+      nested.classList.toggle('active');
+      this.classList.toggle('open');
+    });
+  });
+
+  function seleccionarDestino(destino) {
+    destinoActual = destino;
+    document.getElementById("destinoSeleccionado").innerText = `Destino seleccionado: ${destino}`;
+    document.getElementById("btn1paso").disabled = false;
+    document.getElementById("btn2pasos").disabled = false;
+  }
+
+  function transferir(tipo) {
+    if (!destinoActual) {
+      alert("Selecciona un destino primero.");
+      return;
+    }
+
+    // Aquí puedes integrar con Genesys Cloud mediante postMessage u otra API.
+    const mensaje = {
+      tipoTransferencia: tipo === "1" ? "1 paso" : "2 pasos",
+      destino: destinoActual
+    };
+
+    // Por ejemplo, enviar el mensaje a Genesys Cloud Interaction Widget
+    // window.parent.postMessage({ action: "transfer", ...mensaje }, "*");
+
+    alert(`Transferencia (${mensaje.tipoTransferencia}) a ${mensaje.destino}`);
+  }
+</script>
+
+</body>
+</html>
