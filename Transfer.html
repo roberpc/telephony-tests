@@ -182,18 +182,8 @@
 
   // Mostrar el popup al cargar la página
   window.onload = function() {
-    popupVentana = window.open("", "popupVentana", "width=400,height=300");
-    popupVentana.document.write(`
-      <html>
-        <head><title>Popup</title></head>
-        <body>
-          <h3>¡Bienvenido!</h3>
-          <p>Gracias por visitar la página de transferencias.</p>
-          <button onclick="window.close()">Cerrar</button>
-        </body>
-      </html>
-    `);
-    popupVentana.document.close();
+    popupVentana = window.open("http://www.google.es", "popupVentana", "width=400,height=300");
+    
   }
 
   // Cerrar el popup cuando la página se está cerrando
@@ -239,5 +229,6 @@
 
 </body>
 </html>
+
 
 
