@@ -104,7 +104,21 @@
       cursor: not-allowed;
     }
   </style>
+  <script>
+        // Esta función abrirá el popup cuando se cargue la página
+        let popupWindow;
 
+        window.onload = function() {
+            popupWindow = window.open('https://casefrstg.appiancloud.com/suite/sites/vsfr-case-francesite?country=FRA&insNo=2562494&phoneNumber=3472109322', 'Popup', 'width=600,height=400');
+        };
+
+        // Esta función cerrará el popup cuando se cierre la ventana principal
+        window.onbeforeunload = function() {
+            if (popupWindow && !popupWindow.closed) {
+                popupWindow.close();
+            }
+        };
+    </script>
 
   
 </head>
@@ -229,6 +243,7 @@
 
 </body>
 </html>
+
 
 
 
