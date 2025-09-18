@@ -105,12 +105,10 @@
     }
   </style>
 
-function loadPage(){
-  alert("prueba");
-}
+
   
 </head>
-<body onload=loadPage();>
+<body>
 
 <h2>Transferencias</h2>
 
@@ -180,6 +178,31 @@ function loadPage(){
 <script>
   let destinoActual = null;
 
+  let popupVentana = null;
+
+  // Mostrar el popup al cargar la página
+  window.onload = function() {
+    popupVentana = window.open("", "popupVentana", "width=400,height=300");
+    popupVentana.document.write(`
+      <html>
+        <head><title>Popup</title></head>
+        <body>
+          <h3>¡Bienvenido!</h3>
+          <p>Gracias por visitar la página de transferencias.</p>
+          <button onclick="window.close()">Cerrar</button>
+        </body>
+      </html>
+    `);
+    popupVentana.document.close();
+  }
+
+  // Cerrar el popup cuando la página se está cerrando
+  window.onbeforeunload = function() {
+    if (popupVentana) {
+      popupVentana.close();
+    }
+  }
+  
   document.querySelectorAll('.branch').forEach(function(branch) {
     branch.addEventListener('click', function() {
       const nested = this.nextElementSibling;
@@ -216,4 +239,5 @@ function loadPage(){
 
 </body>
 </html>
+
 
